@@ -6,7 +6,7 @@
 /*   By: horrodri <horrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 20:58:42 by horrodri          #+#    #+#             */
-/*   Updated: 2026/03/17 13:59:37 by horrodri         ###   ########.fr       */
+/*   Updated: 2026/03/17 21:40:58 by horrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 
 */
 
+void argument_walker (argc,  argv[]);
 void takeandvalidate_input (char *argv[]);
 void print_stackA_array(int argc, char *stack_a[]);
 void create_stacks (int argc, char *argv[]);
@@ -50,6 +51,12 @@ int main (int argc, char *argv[])
     // TODO: implement atoi to transform cli arguments into integers
     return 0;
 }
+
+void argument_walker (argc,  argv[])
+{
+    char *walker = &argv[0][0];
+    while(*walker !=)
+} 
 
 void takeandvalidate_input (char *argv[])
 {
