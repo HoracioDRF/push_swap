@@ -6,7 +6,7 @@
 /*   By: horrodri <horrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 20:58:42 by horrodri          #+#    #+#             */
-/*   Updated: 2026/03/21 19:38:30 by horrodri         ###   ########.fr       */
+/*   Updated: 2026/03/22 13:21:23 by horrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,21 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h> // TO BE DELETED, ONLY FOR DEBUGGING -- printf
+#include <unistd.h> // read, write
+#include <stdlib.h> // malloc, free
 
-#define INT_MAX 
-#define INT_MIN 
 #define DEBUG_MODE 0
 
-void debugger(char *argv[]);
 void argument_walker(int argc, char *argv[]);
-void ft_cli_split(char *agrv[], char delimiter, int argc);
 int ft_strlen(char *str);
+int shelve_counter(char *str, char delimiter);
+//void ft_cli_split(char *agrv[], char delimiter, int argc);
+
+void debugger(char *argv[]);
 
 int main (int argc, char *argv[])
 {
-    char delimiter = ' ';
-    ft_cli_split(argv, delimiter, argc);
-
-
-
 
     if (DEBUG_MODE ==  1)
     {
@@ -77,55 +73,45 @@ int main (int argc, char *argv[])
     return 0;
 }
 
-/**
- * @brief takes a big string and breaks it down into terms for conversion
- * Assumes that you will always start on a char.
- */
-void ft_cli_split(int argc, char *argv[], char delimiter)
+// loop to determine how big to make the pointer array == word_counter
+int shelve_counter(char *str, char delimiter)
 {
-    for(int i = 0; i < argc; i++)
+    int shelve_count = 0;
+    while(*str != '\0')
     {
-        int j = 0;
-        while(argv[i][j] != '\0')
+        if (*str != delimiter)
         {
-            if (argv[i][j] == delimiter)
+            shelve_count++;
+            while (*str != delimiter && *str != '\0')
             {
-                //malloc(sizeof(char) * n);2
-                printf("HIT\n");
+                str++;
             }
-            j++;
+        }
+        else
+        {
+            str++;
         }
     }
-} 
+    return(shelve_count);
+}
 
 /**
  * We start by assuming the str is char started, no spaces at the beggining
  * what should we if we find multiple spaces?
  */
-void ft_split(char *str, char delimiter)
+/**
+ void ft_split(char *str, char delimiter)
 {
-    int shelve_counter = 0;
-    int shelve_count = 1;
-    char *shelve_counter_iterator = str;
     int i = 0;
     int j = 0;
     
-    // loop to determine how big to make the pointer array == word_counter
-    while(*shelve_counter_iterator != '\0')
-    {
-        if (*shelve_counter_iterator == delimiter)
-        {
-            shelve_count++;
-            shelve_counter_iterator++;
-        }
-        else
-        {
-            shelve_counter_iterator++;
-        }
-    }
 
-    // create array of pointers big enough for all words
-    char *pointer_array[shelve_count] = {NULL};
+    // create array of pointers big enough for all pointers to words
+    char **pointer_array = malloc(sizeof(char *) * (shelve_counter(str, delimiter) + 1));
+    if (!pointer_array)
+    {
+        return(NULL);
+    }
     
     //allocates the memory for all strings that the shelve pointers point to
     while(*str != '\0')
@@ -147,6 +133,7 @@ void ft_split(char *str, char delimiter)
 
     //fills the allocated space with the strings
 }
+*/
 
 int ft_strlen(char *str)
 {
