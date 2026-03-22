@@ -6,7 +6,7 @@
 /*   By: horrodri <horrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 20:58:42 by horrodri          #+#    #+#             */
-/*   Updated: 2026/03/22 13:21:23 by horrodri         ###   ########.fr       */
+/*   Updated: 2026/03/22 20:46:25 by horrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@
 void argument_walker(int argc, char *argv[]);
 int ft_strlen(char *str);
 int shelve_counter(char *str, char delimiter);
-//void ft_cli_split(char *agrv[], char delimiter, int argc);
+void ft_split(char *agrv[], char delimiter, int argc);
 
 void debugger(char *argv[]);
 
@@ -70,13 +70,14 @@ int main (int argc, char *argv[])
     {
         debugger(argv);
     }
-    return 0;
+    return(0);
 }
 
 // loop to determine how big to make the pointer array == word_counter
 int shelve_counter(char *str, char delimiter)
 {
     int shelve_count = 0;
+    
     while(*str != '\0')
     {
         if (*str != delimiter)
@@ -99,41 +100,58 @@ int shelve_counter(char *str, char delimiter)
  * We start by assuming the str is char started, no spaces at the beggining
  * what should we if we find multiple spaces?
  */
-/**
- void ft_split(char *str, char delimiter)
+char **ft_split(char *str, char delimiter)
 {
-    int i = 0;
-    int j = 0;
-    
-
     // create array of pointers big enough for all pointers to words
-    char **pointer_array = malloc(sizeof(char *) * (shelve_counter(str, delimiter) + 1));
+    int index = 0;
+    
+    char **pointer_array = malloc(sizeof(char *) * (shelve_counter(str, delimiter) + 1)); // +1 for the null terminator for the array
     if (!pointer_array)
     {
         return(NULL);
     }
     
-    //allocates the memory for all strings that the shelve pointers point to
+    char *word_start;
+    char *empty_word_ptr;
+    // find word_to_load's start and end
     while(*str != '\0')
     {
+        if (*str != delimiter)
+        {
+            word_start = str;
+            while (*str != delimiter && *str != '\0')
+            {
+                str++;
+            }
+            empty_word_ptr = malloc((str - word_start) + 1); // +1 for the nul terminator for the string
+            // start fill subfunction
+            int i;
+            int j;
 
-        if (*str == delimiter)
-        {
-            // runs the counter an extra time to make space for the string's null terminator
-            j++;
-            pointer_array[i] = malloc(sizeof(char) * j);
-            i++;
+            i = str - word_start;
+            j = 0;
+            while (word_start != (str))
+            {
+                empty_word_ptr[j] = *word_start;
+                word_start++;
+                i--;
+                j++;
+            }
+            empty_word_ptr[j] = '\0'; // ensures strings are always null terminated
+
+            // link into shelf 
+            pointer_array[index] = empty_word_ptr;
+            index++;
         }
-        else
+        else // this ensures loops continues until end of string
         {
-            j++;
             str++;
         }
     }
-
     //fills the allocated space with the strings
+    pointer_array[index] = NULL;
+    return(pointer_array);
 }
-*/
 
 int ft_strlen(char *str)
 {
